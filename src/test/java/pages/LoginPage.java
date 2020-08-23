@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.testng.Assert.assertEquals;
 
 public class LoginPage extends BasePage {
@@ -25,7 +27,7 @@ public class LoginPage extends BasePage {
 
     public void openPage() {
         driver.get(URL);
-        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     public void loginWithValidData(String email, String password) {
@@ -35,10 +37,10 @@ public class LoginPage extends BasePage {
         inputEmail(email);
         inputPassword(password);
         pressEnterToSubmitData(LOG_IN_BTN_PATH);
-        clickMenuProfileButton();
     }
 
     public boolean checkIfLoggedInSuccessfully() {
+        clickMenuProfileButton();
         waitForElementVisibleByXpath(ACCOUNT_TITLE_PATH);
         return driver.findElement(By.xpath(ACCOUNT_TITLE_PATH)).isDisplayed();
     }
@@ -83,6 +85,7 @@ public class LoginPage extends BasePage {
     }
 
     private void clickContinueWithEmailOption() {
+        waitForElementVisibleByXpath(CONTINUE_WITH_EMAIL_OPTION_PATH);
         driver.findElement(By.xpath(CONTINUE_WITH_EMAIL_OPTION_PATH)).click();
     }
 
@@ -93,10 +96,12 @@ public class LoginPage extends BasePage {
     private void inputPassword(String password) {
         driver.findElement((PASSWORD_FIELD_NAME)).sendKeys(password);
         waitForElementVisibleByXpath(LOG_IN_BTN_PATH);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     private void clickMenuProfileButton() {
-        waitForElementVisibleByID_NAME_Css(MENU_BUTTON_WHEN_LOGGED_IN_CSS);
+        waitForElementVisibleByID_NAME_CSS(MENU_BUTTON_WHEN_LOGGED_IN_CSS);
         driver.findElement(MENU_BUTTON_WHEN_LOGGED_IN_CSS).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 }

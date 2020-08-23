@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -26,7 +23,7 @@ public class BasePage {
         }
     }
 
-    public void waitForElementVisibleByID_NAME_Css(By locator) {
+    public void waitForElementVisibleByID_NAME_CSS(By locator) {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated((locator)));
         } catch (TimeoutException ex) {
@@ -66,4 +63,16 @@ public class BasePage {
         WebElement element = driver.findElement(By.xpath(locator));
         element.sendKeys(text);
     }
+
+    public void pressEnterToSubmitInAlert(){
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+    }
+
+    public void pressCancelToDismissInAlert(){
+        Alert alert = driver.switchTo().alert();
+        alert.dismiss();
+    }
+
+
 }
