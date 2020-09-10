@@ -1,7 +1,10 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+
+import static com.codeborne.selenide.Selenide.$;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class ProfilePage extends BasePage {
 
@@ -15,62 +18,63 @@ public class ProfilePage extends BasePage {
     private static final String PATH_TO_FILE = "/Users/kate/Documents/AirbnbTests/src/test/resources/profilePhoto.jpg";
     private static final String DELETE_PHOTO_BTN_NAME = "//button[@class='picture-tile-delete overlay-btn']";
 
-    public ProfilePage(WebDriver driver) {
-        super(driver);
-    }
-
-    public void openProfile() {
+    public ProfilePage openProfile() {
         clickOnMenuButton();
         clickAccountFormBtn();
         clickGoTOProfileBtn();
+        return this;
     }
 
-    public void uploadFileFromComp() {
+    public ProfilePage uploadFileFromComp() {
         clickUpdatePhotoBtn();
-        driver.findElement(By.xpath("//input[@type='file']")).sendKeys(PATH_TO_FILE);
-//        pressEnterToSubmitInAlert();
+        $(By.xpath("//input[@type='file']")).sendKeys(PATH_TO_FILE);
+        return this;
     }
 
-    public boolean checkIfPhotoLoaded() {
+    public void checkIfPhotoLoaded() {
         waitForElementVisibleByXpath(DELETE_PHOTO_BTN_NAME);
-        return driver.findElement(By.xpath(DELETE_PHOTO_BTN_NAME)).isDisplayed();
+        boolean isPhotoLoaded = $(By.xpath(DELETE_PHOTO_BTN_NAME)).isDisplayed();
+        assertTrue(isPhotoLoaded, "Photo is not loaded");
     }
 
-    public void deletePhotoFromProfile() {
+    public ProfilePage deletePhotoFromProfile() {
         clickUpdatePhotoBtn();
         clickDeletePhotoBtn();
+        return this;
     }
 
-    public boolean checkIfPhotoDeleted() {
+    public void checkIfPhotoDeleted() {
         waitForElementVisibleByXpath(DELETE_PHOTO_BTN_NAME);
-        return !driver.findElement(By.xpath(DELETE_PHOTO_BTN_NAME)).isDisplayed();
+        boolean isPhotoDeleted = $(By.xpath(DELETE_PHOTO_BTN_NAME)).isDisplayed();
+        assertFalse(isPhotoDeleted, "Photo is not deleted");
     }
 
     private void clickAccountFormBtn() {
         waitForElementVisibleByXpath(ACCOUNT_MENU_PATH);
-        driver.findElement(By.xpath(ACCOUNT_MENU_PATH)).click();
+        $(By.xpath(ACCOUNT_MENU_PATH)).click();
         waitForElementVisibleByID_NAME_CSS(TITLE_PROFILE_NAME_CSS);
     }
 
     private void clickOnMenuButton() {
         waitForElementVisibleByXpath(MAIN_NAVIGATION_MENU_PATH);
-        driver.findElement(By.xpath(MAIN_NAVIGATION_MENU_PATH)).click();
+        $(By.xpath(MAIN_NAVIGATION_MENU_PATH)).click();
+
     }
 
     private void clickGoTOProfileBtn() {
         waitForElementVisibleByID_NAME_CSS(GO_TO_PROFILE_CSS);
-        driver.findElement(GO_TO_PROFILE_CSS).click();
+        $(GO_TO_PROFILE_CSS).click();
         waitForElementVisibleByXpath(UPDATE_PHOTO_PATH);
     }
 
     private void clickUpdatePhotoBtn() {
-        driver.findElement(By.xpath(UPDATE_PHOTO_PATH)).click();
+        $(By.xpath(UPDATE_PHOTO_PATH)).click();
         waitForElementVisibleByID_NAME_CSS(UPLOAD_FILE_FROM_COMP_NAME);
     }
 
     private void clickDeletePhotoBtn() {
         waitForElementVisibleByXpath(DELETE_PHOTO_BTN_NAME);
-        driver.findElement(By.xpath(DELETE_PHOTO_BTN_NAME)).click();
+        $(By.xpath(DELETE_PHOTO_BTN_NAME)).click();
         pressEnterToSubmitInAlert();
     }
 }
