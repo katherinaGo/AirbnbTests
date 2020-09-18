@@ -1,8 +1,10 @@
 package tests;
 
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+@Ignore
 public class FindLocationTest extends BaseTest {
 
     private String location = "Amsterdam";
