@@ -1,7 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
-import pages.RetryAnalyzer;
+import utils.RetryAnalyzer;
 
 public class ProfileTest extends BaseTest {
     private static final String EMAIL_VALUE = "kateg@yopmail.com";

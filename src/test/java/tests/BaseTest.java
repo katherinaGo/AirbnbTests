@@ -7,15 +7,18 @@ import org.testng.annotations.Listeners;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.ProfilePage;
+import steps.FindLocationSteps;
+import utils.TestListener;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
-@Listeners
+@Listeners(TestListener.class)
 public class BaseTest {
 
     protected LoginPage loginPage;
     protected ProfilePage profilePage;
     protected HomePage homePage;
+    protected FindLocationSteps locationSteps;
 
     @BeforeMethod
     public void setUp() {
@@ -28,6 +31,7 @@ public class BaseTest {
         loginPage = new LoginPage();
         profilePage = new ProfilePage();
         homePage = new HomePage();
+        locationSteps = new FindLocationSteps();
     }
 
     @AfterMethod(alwaysRun = true)

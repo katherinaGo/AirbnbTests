@@ -5,6 +5,10 @@ import org.testng.annotations.Test;
 
 public class FindLocationTest extends BaseTest {
 
+    private String location = "Amsterdam";
+    private String checkInDate = "2020-10-24";
+    private String checkOutDate = "2020-11-24";
+
     @DataProvider(name = "Valid locations to find")
     public Object[][] validLocationsToFind() {
         return new Object[][]{
@@ -31,5 +35,11 @@ public class FindLocationTest extends BaseTest {
         loginPage.openPage();
         homePage.searchPlacesByLocations(invalidLocation)
                 .checkIfLocationsNotDisplayed(invalidLocation);
+    }
+
+    @Test
+    public void findLocationForNeededDate() {
+        loginPage.openPage();
+        locationSteps.findLocationForNeededDate(location, checkInDate, checkOutDate);
     }
 }
